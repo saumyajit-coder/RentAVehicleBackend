@@ -1,8 +1,20 @@
 package com.rent.rentavehicle.entity;
 
-import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+
+import org.hibernate.annotations.ColumnTransformer;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "bookings")
@@ -30,6 +42,7 @@ public class Booking {
     private Double totalPrice;
 
     @Enumerated(EnumType.STRING)
+    @ColumnTransformer(read = "LOWER(status)", write = "LOWER(?)")
     private BookingStatus status = BookingStatus.PENDING;
 
     @Column(nullable = false)
@@ -37,6 +50,7 @@ public class Booking {
 
     public enum BookingStatus {
         PENDING, CONFIRMED, CANCELLED, COMPLETED
+        
     }
 
     public Booking() {

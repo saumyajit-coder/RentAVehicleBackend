@@ -1,7 +1,8 @@
 package com.rent.rentavehicle.service;
 
-import com.rent.rentavehicle.entity.Customer;
 import java.util.List;
+
+import com.rent.rentavehicle.entity.Customer;
 
 public interface CustomerService {
     Customer createCustomer(Customer customer);

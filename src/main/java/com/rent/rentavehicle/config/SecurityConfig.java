@@ -18,8 +18,8 @@ public class SecurityConfig {
         http
             .csrf(csrf -> csrf.disable()) // Disable CSRF for simplicity (not recommended for production)
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/admin/**","/customers/**").permitAll()
-                .requestMatchers( "/vehicles/**").authenticated()
+                .requestMatchers("/admin/**","/customers/**","/vehicles/**","/bookings/**","/").permitAll()
+                // .requestMatchers( "/vehicles/**").authenticated()
  
                 .anyRequest().permitAll() 
             )
