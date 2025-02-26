@@ -16,7 +16,7 @@ import com.rent.rentavehicle.entity.Vehicle;
 import com.rent.rentavehicle.service.BookingService;
 
 @RestController
-@RequestMapping("bookings")
+@RequestMapping("/bookings")
 public class BookingController {
 
     private final BookingService bookingService;
@@ -26,7 +26,7 @@ public class BookingController {
     }
 
     // Create a new booking
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity<Booking> createBooking(@RequestBody Booking booking) {
         Booking savedBooking = bookingService.createBooking(booking);
         return ResponseEntity.ok(savedBooking);

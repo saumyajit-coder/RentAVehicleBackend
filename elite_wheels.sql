@@ -47,9 +47,10 @@ CREATE TABLE customers (
     contact VARCHAR(20) NOT NULL UNIQUE,
     email VARCHAR(255) NOT NULL UNIQUE,
     pass CHAR(64) NOT NULL,
+    address varchar(255),
+    role varchar(255),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
-
 
 INSERT INTO customers (customer_id, c_name, contact, email, pass) 
 VALUES ('C0001', 'Sneha Iyer', '9456789012', 'sneha@gmail.com', SHA2('customerpass1234', 256));
@@ -159,73 +160,113 @@ INSERT INTO bookings (
 
 
 
-
-
-
 -- Vehicle Documents Table
+-- CREATE TABLE vehicle_documents (
+--     document_id BIGINT AUTO_INCREMENT PRIMARY KEY,
+--     vehicle_id BIGINT NOT NULL UNIQUE,
+--     driving_license_file_path VARCHAR(255) NOT NULL,
+--     rc_file_path VARCHAR(255) NOT NULL,
+--     insurance_policy_file_path VARCHAR(255) NOT NULL,
+--     puc_certificate_file_path VARCHAR(255) NOT NULL,
+--     id_proof_file_path VARCHAR(255) NOT NULL,
+--     uploaded_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+--     FOREIGN KEY (vehicle_id) REFERENCES vehicles(vehicle_id) ON DELETE CASCADE
+-- );
+
 CREATE TABLE vehicle_documents (
     document_id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    vehicle_id BIGINT NOT NULL UNIQUE,
-    driving_license_file_path VARCHAR(255) NOT NULL,
-    rc_file_path VARCHAR(255) NOT NULL,
-    insurance_policy_file_path VARCHAR(255) NOT NULL,
-    puc_certificate_file_path VARCHAR(255) NOT NULL,
-    id_proof_file_path VARCHAR(255) NOT NULL,
-    uploaded_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    vehicle_id BIGINT NOT NULL,
+    document_type ENUM('DRIVING_LICENSE', 'RC', 'INSURANCE_POLICY', 'PUC_CERTIFICATE', 'ID_PROOF') NOT NULL,
+    file_path VARCHAR(255) NOT NULL,
+    uploaded_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (vehicle_id) REFERENCES vehicles(vehicle_id) ON DELETE CASCADE
 );
 
-INSERT INTO vehicle_documents (
-    vehicle_id, driving_license_file_path, rc_file_path, insurance_policy_file_path, 
-    puc_certificate_file_path, id_proof_file_path
-) VALUES 
-(1, '/documents/vehicle1_dl.pdf', '/documents/vehicle1_rc.pdf', '/documents/vehicle1_insurance.pdf', '/documents/vehicle1_puc.pdf', '/documents/vehicle1_id.pdf'),
-(2, '/documents/vehicle2_dl.pdf', '/documents/vehicle2_rc.pdf', '/documents/vehicle2_insurance.pdf', '/documents/vehicle2_puc.pdf', '/documents/vehicle2_id.pdf'),
-(3, '/documents/vehicle3_dl.pdf', '/documents/vehicle3_rc.pdf', '/documents/vehicle3_insurance.pdf', '/documents/vehicle3_puc.pdf', '/documents/vehicle3_id.pdf'),
-(4, '/documents/vehicle4_dl.pdf', '/documents/vehicle4_rc.pdf', '/documents/vehicle4_insurance.pdf', '/documents/vehicle4_puc.pdf', '/documents/vehicle4_id.pdf');
+
+-- INSERT INTO vehicle_documents (
+--     vehicle_id, driving_license_file_path, rc_file_path, insurance_policy_file_path, 
+--     puc_certificate_file_path, id_proof_file_path
+-- ) VALUES 
+-- (1, '/documents/vehicle1_dl.pdf', '/documents/vehicle1_rc.pdf', '/documents/vehicle1_insurance.pdf', '/documents/vehicle1_puc.pdf', '/documents/vehicle1_id.pdf'),
+-- (2, '/documents/vehicle2_dl.pdf', '/documents/vehicle2_rc.pdf', '/documents/vehicle2_insurance.pdf', '/documents/vehicle2_puc.pdf', '/documents/vehicle2_id.pdf'),
+-- (3, '/documents/vehicle3_dl.pdf', '/documents/vehicle3_rc.pdf', '/documents/vehicle3_insurance.pdf', '/documents/vehicle3_puc.pdf', '/documents/vehicle3_id.pdf'),
+-- (4, '/documents/vehicle4_dl.pdf', '/documents/vehicle4_rc.pdf', '/documents/vehicle4_insurance.pdf', '/documents/vehicle4_puc.pdf', '/documents/vehicle4_id.pdf');
+
+
+INSERT INTO vehicle_documents (vehicle_id, document_type, file_path, uploaded_at) 
+VALUES 
+(1, 'DRIVING_LICENSE', '/documents/license1.pdf', NOW()),
+(2, 'RC', '/documents/rc2.pdf', NOW()),
+(3, 'INSURANCE_POLICY', '/documents/insurance3.pdf', NOW()),
+(4, 'PUC_CERTIFICATE', '/documents/puc4.pdf', NOW());
 
 SELECT * FROM vehicle_documents;
 
 
 -- Customer Documents Table
+-- CREATE TABLE customer_documents (
+--     document_id BIGINT AUTO_INCREMENT PRIMARY KEY,
+--     customer_id VARCHAR(5) NOT NULL UNIQUE,
+--     booking_id BIGINT NOT NULL,
+--     driving_license_file_path VARCHAR(255) NOT NULL,
+--     government_id_file_path VARCHAR(255) NOT NULL,
+--     address_proof_file_path VARCHAR(255) NOT NULL,
+--     emergency_contact_file_path VARCHAR(255) NOT NULL,
+--     international_driving_permit_file_path VARCHAR(255) NOT NULL,
+--     passport_file_path VARCHAR(255) NOT NULL,
+--     uploaded_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+--     FOREIGN KEY (customer_id) REFERENCES customers(customer_id) ON DELETE CASCADE,
+--     FOREIGN KEY (booking_id) REFERENCES bookings(booking_id) ON DELETE CASCADE
+-- );
+
 CREATE TABLE customer_documents (
     document_id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    customer_id VARCHAR(5) NOT NULL UNIQUE,
+    customer_id varchar(5) NOT NULL,
     booking_id BIGINT NOT NULL,
-    driving_license_file_path VARCHAR(255) NOT NULL,
-    government_id_file_path VARCHAR(255) NOT NULL,
-    address_proof_file_path VARCHAR(255) NOT NULL,
-    emergency_contact_file_path VARCHAR(255) NOT NULL,
-    international_driving_permit_file_path VARCHAR(255) NOT NULL,
-    passport_file_path VARCHAR(255) NOT NULL,
-    uploaded_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    document_type ENUM('DRIVING_LICENSE', 'GOVERNMENT_ID', 'ADDRESS_PROOF', 'EMERGENCY_CONTACT', 'INTERNATIONAL_DRIVING_PERMIT', 'PASSPORT') NOT NULL,
+    file_path VARCHAR(255) NOT NULL,
+    uploaded_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (customer_id) REFERENCES customers(customer_id) ON DELETE CASCADE,
     FOREIGN KEY (booking_id) REFERENCES bookings(booking_id) ON DELETE CASCADE
 );
 
-INSERT INTO customer_documents (
-    customer_id, booking_id, driving_license_file_path, government_id_file_path, 
-    address_proof_file_path, emergency_contact_file_path, 
-    international_driving_permit_file_path, passport_file_path
-) VALUES 
-('C0001', 1, '/documents/customer1_dl.pdf', '/documents/customer1_id.pdf', 
- '/documents/customer1_address.pdf', '/documents/customer1_emergency.pdf', 
- '/documents/customer1_permit.pdf', '/documents/customer1_passport.pdf'),
 
-('C0002', 2, '/documents/customer2_dl.pdf', '/documents/customer2_id.pdf', 
- '/documents/customer2_address.pdf', '/documents/customer2_emergency.pdf', 
- '/documents/customer2_permit.pdf', '/documents/customer2_passport.pdf'),
+-- INSERT INTO customer_documents (
+--     customer_id, booking_id, driving_license_file_path, government_id_file_path, 
+--     address_proof_file_path, emergency_contact_file_path, 
+--     international_driving_permit_file_path, passport_file_path
+-- ) VALUES 
+-- ('C0001', 1, '/documents/customer1_dl.pdf', '/documents/customer1_id.pdf', 
+--  '/documents/customer1_address.pdf', '/documents/customer1_emergency.pdf', 
+--  '/documents/customer1_permit.pdf', '/documents/customer1_passport.pdf'),
 
-('C0003', 3, '/documents/customer3_dl.pdf', '/documents/customer3_id.pdf', 
- '/documents/customer3_address.pdf', '/documents/customer3_emergency.pdf', 
- '/documents/customer3_permit.pdf', '/documents/customer3_passport.pdf'),
+-- ('C0002', 2, '/documents/customer2_dl.pdf', '/documents/customer2_id.pdf', 
+--  '/documents/customer2_address.pdf', '/documents/customer2_emergency.pdf', 
+--  '/documents/customer2_permit.pdf', '/documents/customer2_passport.pdf'),
 
-('C0004', 4, '/documents/customer4_dl.pdf', '/documents/customer4_id.pdf', 
- '/documents/customer4_address.pdf', '/documents/customer4_emergency.pdf', 
- '/documents/customer4_permit.pdf', '/documents/customer4_passport.pdf');
+-- ('C0003', 3, '/documents/customer3_dl.pdf', '/documents/customer3_id.pdf', 
+--  '/documents/customer3_address.pdf', '/documents/customer3_emergency.pdf', 
+--  '/documents/customer3_permit.pdf', '/documents/customer3_passport.pdf'),
+
+-- ('C0004', 4, '/documents/customer4_dl.pdf', '/documents/customer4_id.pdf', 
+--  '/documents/customer4_address.pdf', '/documents/customer4_emergency.pdf', 
+--  '/documents/customer4_permit.pdf', '/documents/customer4_passport.pdf');
+
+INSERT INTO customer_documents (customer_id, booking_id, document_type, file_path, uploaded_at) 
+VALUES 
+("C0001", 1, 'DRIVING_LICENSE', '/uploads/documents/dl_1.pdf', NOW()),
+("C0002", 2, 'GOVERNMENT_ID', '/uploads/documents/gov_id_2.pdf', NOW()),
+("C0003", 3, 'PASSPORT', '/uploads/documents/passport_3.pdf', NOW()),
+("C0004", 4, 'ADDRESS_PROOF', '/uploads/documents/address_proof_4.pdf', NOW());
  
  SELECT * FROM customer_documents;
  
+show tables;
+
+
+drop database elite_wheels;
+ SELECT * FROM vehicles WHERE vehicle_id = 1;
+
  
  
 
