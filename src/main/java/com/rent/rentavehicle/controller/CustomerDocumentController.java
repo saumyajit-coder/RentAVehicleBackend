@@ -1,21 +1,16 @@
 package com.rent.rentavehicle.controller;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.rent.rentavehicle.entity.CustomerDocument;
 import com.rent.rentavehicle.service.CustomerDocumentService;
 
 @RestController
-@RequestMapping("/customer-documents")
+@RequestMapping("customers/customer-documents")
 public class CustomerDocumentController {
 
     private final CustomerDocumentService documentService;
@@ -24,21 +19,31 @@ public class CustomerDocumentController {
         this.documentService = documentService;
     }
 
-    // Upload a new document
+    // ✅ Upload a new document
     @PostMapping
     public ResponseEntity<CustomerDocument> uploadDocument(@RequestBody CustomerDocument document) {
         CustomerDocument savedDocument = documentService.uploadDocument(document);
         return ResponseEntity.ok(savedDocument);
     }
 
-    // Get all documents for a customer
+    // ✅ Get all documents for a specific customer
     @GetMapping("/customer/{customerId}")
     public ResponseEntity<List<CustomerDocument>> getDocumentsByCustomer(@PathVariable String customerId) {
         List<CustomerDocument> documents = documentService.getDocumentsByCustomer(customerId);
+        if (documents == null || documents.isEmpty()) {
+            return ResponseEntity.status(404).body(Collections.emptyList()); // Return 404 if no documents found
+        }
         return ResponseEntity.ok(documents);
     }
 
-    // Delete a document by ID
+    // ✅ Get a single document by its ID
+    @GetMapping("/customer/document/{documentId}")
+    public ResponseEntity<CustomerDocument> getDocumentById(@PathVariable Long documentId) {
+        CustomerDocument document = documentService.getDocumentById(documentId);
+        return ResponseEntity.ok(document);
+    }
+
+    // ✅ Delete a document by ID
     @DeleteMapping("/{documentId}")
     public ResponseEntity<String> deleteDocument(@PathVariable Long documentId) {
         documentService.deleteDocument(documentId);

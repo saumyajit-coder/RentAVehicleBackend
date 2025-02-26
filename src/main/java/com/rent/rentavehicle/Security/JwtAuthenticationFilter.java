@@ -37,7 +37,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         // 1️⃣ Skip JWT filter for authentication endpoints (login, register)
         String requestURI = request.getRequestURI();
-        if (requestURI.startsWith("/auth/")) {
+        if (requestURI.startsWith("/auth/") || requestURI.equals("/auth/signup")) {
             filterChain.doFilter(request, response);
             return;
         }
