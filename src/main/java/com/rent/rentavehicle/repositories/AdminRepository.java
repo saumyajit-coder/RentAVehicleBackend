@@ -12,6 +12,6 @@ import com.rent.rentavehicle.entity.Admin;
  * 
  */
 @Repository
-public interface AdminRepository extends CrudRepository<Admin,String>  {
-	Admin findByEmail(String email); 
+public interface AdminRepository extends CrudRepository<Admin, String> {
+	Admin findByEmail(String email);
 }

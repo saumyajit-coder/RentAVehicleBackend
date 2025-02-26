@@ -1,65 +1,3 @@
-// package com.rent.rentavehicle.entity;
-
-// import java.time.LocalDateTime;
-
-// import jakarta.persistence.Column;
-// import jakarta.persistence.Entity;
-// import jakarta.persistence.Id;
-// import jakarta.persistence.Table;
-
-// @Entity
-// @Table(name = "customers")
-// public class Customer {
-
-//     @Id
-//     @Column(name = "customer_id", updatable = false, nullable = false)
-//     private String customerId;
-
-//     @Column(name = "c_name", nullable = false)
-//     private String fullName;
-
-//     @Column(name = "contact", nullable = false, unique = true)
-//     private String contactNumber;
-
-//     @Column(nullable = false, unique = true)
-//     private String email;
-
-//     @Column(name = "pass", nullable = false)
-//     private String passwordHash;
-
-//     @Column(nullable = false)
-//     private LocalDateTime createdAt = LocalDateTime.now();
-
-//     public Customer() {
-//     }
-
-//     public Customer(String customerId, String fullName, String contactNumber, String email, String passwordHash, LocalDateTime createdAt) {
-//         this.customerId = customerId;
-//         this.fullName = fullName;
-//         this.contactNumber = contactNumber;
-//         this.email = email;
-//         this.passwordHash = passwordHash;
-//         this.createdAt = createdAt;
-//     }
-
-//     public String getCustomerId() { return customerId; }
-//     public void setCustomerId(String customerId) { this.customerId = customerId; }
-
-//     public String getFullName() { return fullName; }
-//     public void setFullName(String fullName) { this.fullName = fullName; }
-
-//     public String getContactNumber() { return contactNumber; }
-//     public void setContactNumber(String contactNumber) { this.contactNumber = contactNumber; }
-
-//     public String getEmail() { return email; }
-//     public void setEmail(String email) { this.email = email; }
-
-//     public String getPasswordHash() { return passwordHash; }
-//     public void setPasswordHash(String passwordHash) { this.passwordHash = passwordHash; }
-
-//     public LocalDateTime getCreatedAt() { return createdAt; }
-//     public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
-// }
 package com.rent.rentavehicle.entity;
 
 import java.time.LocalDateTime;
@@ -96,15 +34,14 @@ public class Customer {
     private LocalDateTime createdAt;
 
     public Customer() {
-        this.createdAt = LocalDateTime.now(); // Set timestamp
+        this.createdAt = LocalDateTime.now();
     }
 
-    // Constructor without ID (ID is generated)
     public Customer(String fullName, String contactNumber, String email, String password) {
         this.fullName = fullName;
         this.contactNumber = contactNumber;
         this.email = email;
-        this.passwordHash = hashPassword(password);
+        setPassword(password); // Call setter to ensure password gets hashed
         this.createdAt = LocalDateTime.now();
     }
 
@@ -113,30 +50,50 @@ public class Customer {
         this.createdAt = LocalDateTime.now();
     }
 
-    private String hashPassword(String password) {
+    // Hash password before setting
+    public void setPassword(String password) {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        return encoder.encode(password);
+        this.passwordHash = encoder.encode(password);
     }
 
     // Getters and Setters
-    public String getCustomerId() { return customerId; }
-    public void setCustomerId(String customerId) { 
-        this.customerId = customerId; 
-        System.out.println("CID: " + customerId);
+    public String getCustomerId() {
+        return customerId;
     }
 
-    public String getFullName() { return fullName; }
-    public void setFullName(String fullName) { this.fullName = fullName; }
+    public void setCustomerId(String customerId) {
+        this.customerId = customerId;
+    }
 
-    public String getContactNumber() { return contactNumber; }
-    public void setContactNumber(String contactNumber) { this.contactNumber = contactNumber; }
+    public String getFullName() {
+        return fullName;
+    }
 
-    public String getEmail() { return email; }
-    public void setEmail(String email) { this.email = email; }
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
 
-    public String getPasswordHash() { return passwordHash; }
-    public void setPasswordHash(String passwordHash) { this.passwordHash = hashPassword(passwordHash); }
+    public String getContactNumber() {
+        return contactNumber;
+    }
 
-    public LocalDateTime getCreatedAt() { return createdAt; }
+    public void setContactNumber(String contactNumber) {
+        this.contactNumber = contactNumber;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPasswordHash() {
+        return passwordHash;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
 }
-

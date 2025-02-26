@@ -43,7 +43,6 @@
 //     }
 // }
 
-
 package com.rent.rentavehicle.service.impl;
 
 import java.util.List;
@@ -69,7 +68,7 @@ public class CustomerServiceImpl implements CustomerService {
         customer.setCustomerId(generateCustomerId());
 
         // Hash the password before saving
-        customer.setPasswordHash(hashPassword(customer.getPasswordHash()));
+        customer.setPassword(hashPassword(customer.getPasswordHash()));
 
         return customerRepository.save(customer);
     }
@@ -107,4 +106,3 @@ public class CustomerServiceImpl implements CustomerService {
         return new BCryptPasswordEncoder().encode(password);
     }
 }
-
