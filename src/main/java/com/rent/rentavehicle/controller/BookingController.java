@@ -60,7 +60,7 @@ public class BookingController {
         return ResponseEntity.ok(bookings);
     }
 
-
+// ........
 
     // Delete a booking by ID
     @DeleteMapping("/{bookingId}")
