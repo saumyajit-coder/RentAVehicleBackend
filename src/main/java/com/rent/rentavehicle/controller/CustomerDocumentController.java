@@ -20,7 +20,7 @@ public class CustomerDocumentController {
     }
 
     // ✅ Upload a new document
-    @PostMapping
+    @PostMapping("create")
     public ResponseEntity<CustomerDocument> uploadDocument(@RequestBody CustomerDocument document) {
         CustomerDocument savedDocument = documentService.uploadDocument(document);
         return ResponseEntity.ok(savedDocument);
