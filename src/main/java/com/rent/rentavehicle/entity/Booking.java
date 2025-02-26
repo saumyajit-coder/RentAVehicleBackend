@@ -3,8 +3,6 @@ package com.rent.rentavehicle.entity;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-import org.hibernate.annotations.ColumnTransformer;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -42,16 +40,16 @@ public class Booking {
     private Double totalPrice;
 
     @Enumerated(EnumType.STRING)
-    @ColumnTransformer(read = "LOWER(status)", write = "LOWER(?)")
-    private BookingStatus status = BookingStatus.PENDING;
+    @Column(nullable = false)
+    private BookingStatus status = BookingStatus.pending;
 
     @Column(nullable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
 
     public enum BookingStatus {
-        PENDING, CONFIRMED, CANCELLED, COMPLETED
-        
+        pending, confirmed, cancelled, completed
     }
+
 
     public Booking() {
     }

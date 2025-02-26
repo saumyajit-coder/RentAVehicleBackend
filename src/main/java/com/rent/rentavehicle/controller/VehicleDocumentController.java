@@ -24,12 +24,20 @@ public class VehicleDocumentController {
         this.vehicleDocumentService = vehicleDocumentService;
     }
 
+    // // Upload a new vehicle document
+    // @PostMapping
+    // public ResponseEntity<VehicleDocument> uploadDocument(@RequestBody VehicleDocument document) {
+    //     VehicleDocument savedDocument = vehicleDocumentService.uploadDocument(document);
+    //     return ResponseEntity.ok(savedDocument);
+    // }
+
+
     // Upload a new vehicle document
-    @PostMapping
-    public ResponseEntity<VehicleDocument> uploadDocument(@RequestBody VehicleDocument document) {
-        VehicleDocument savedDocument = vehicleDocumentService.uploadDocument(document);
-        return ResponseEntity.ok(savedDocument);
-    }
+        @PostMapping("/upload")
+        public VehicleDocument uploadDocument(@RequestBody VehicleDocument document) {
+            return vehicleDocumentService.uploadDocument(document);
+        }
+
 
     // Get all documents for a specific vehicle
     @GetMapping("/vehicle/{vehicleId}")

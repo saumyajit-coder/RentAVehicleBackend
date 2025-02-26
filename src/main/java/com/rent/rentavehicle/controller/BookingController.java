@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.rent.rentavehicle.entity.Booking;
+import com.rent.rentavehicle.entity.Vehicle;
 import com.rent.rentavehicle.service.BookingService;
 
 @RestController
@@ -38,7 +39,7 @@ public class BookingController {
         return booking != null ? ResponseEntity.ok(booking) : ResponseEntity.notFound().build();
     }
 
-    // Get all bookings for a customer
+ // Get all bookings for a customer (excluding maintenance vehicles)
     @GetMapping("/customer/{customerId}")
     public ResponseEntity<List<Booking>> getBookingsByCustomer(@PathVariable String customerId) {
         List<Booking> bookings = bookingService.getBookingsByCustomer(customerId);
@@ -51,6 +52,15 @@ public class BookingController {
         List<Booking> bookings = bookingService.getBookingsByVehicle(vehicleId);
         return ResponseEntity.ok(bookings);
     }
+    
+ // Admin: Get all bookings (including maintenance vehicles)
+    @GetMapping("/admin/bookings/{customerId}")
+    public ResponseEntity<List<Booking>> getAllBookingsByCustomer(@PathVariable String customerId) {
+        List<Booking> bookings = bookingService.getAllBookingsByCustomer(customerId);
+        return ResponseEntity.ok(bookings);
+    }
+
+
 
     // Delete a booking by ID
     @DeleteMapping("/{bookingId}")

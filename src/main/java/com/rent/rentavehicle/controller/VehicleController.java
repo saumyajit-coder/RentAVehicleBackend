@@ -24,12 +24,19 @@ public class VehicleController {
         this.vehicleService = vehicleService;
     }
 
+    // // Add a new vehicle
+    // @PostMapping("/create")
+    // public ResponseEntity<Vehicle> addVehicle(@RequestBody Vehicle vehicle) {
+    //     Vehicle savedVehicle = vehicleService.addVehicle(vehicle);
+    //     return ResponseEntity.ok(savedVehicle);
+    // }
+
     // Add a new vehicle
-    @PostMapping
-    public ResponseEntity<Vehicle> addVehicle(@RequestBody Vehicle vehicle) {
-        Vehicle savedVehicle = vehicleService.addVehicle(vehicle);
-        return ResponseEntity.ok(savedVehicle);
+    @PostMapping("/create")
+    public Vehicle addVehicle(@RequestBody Vehicle vehicle) {
+        return vehicleService.addVehicle(vehicle);
     }
+
 
     // Get vehicle by ID
     @GetMapping("/{vehicleId}")
@@ -39,7 +46,7 @@ public class VehicleController {
     }
 
     // Get all vehicles
-    @GetMapping
+    @GetMapping("/all")
     public ResponseEntity<List<Vehicle>> getAllVehicles() {
         List<Vehicle> vehicles = vehicleService.getAllVehicles();
         return ResponseEntity.ok(vehicles);
