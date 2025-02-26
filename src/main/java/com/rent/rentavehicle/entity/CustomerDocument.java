@@ -36,7 +36,8 @@ public class CustomerDocument {
     public CustomerDocument() {
     }
 
-    public CustomerDocument(Long documentId, Customer customer, Booking booking, DocumentType documentType, String filePath, LocalDateTime uploadedAt) {
+    public CustomerDocument(Long documentId, Customer customer, Booking booking, DocumentType documentType,
+            String filePath, LocalDateTime uploadedAt) {
         this.documentId = documentId;
         this.customer = customer;
         this.booking = booking;
@@ -45,21 +46,51 @@ public class CustomerDocument {
         this.uploadedAt = uploadedAt;
     }
 
-    public Long getDocumentId() { return documentId; }
-    public void setDocumentId(Long documentId) { this.documentId = documentId; }
+    public Long getDocumentId() { // ✅ Fixed getter method
+        return documentId;
+    }
 
-    public Customer getCustomer() { return customer; }
-    public void setCustomer(Customer customer) { this.customer = customer; }
+    public void setDocumentId(Long documentId) {
+        this.documentId = documentId;
+    }
 
-    public Booking getBooking() { return booking; }
-    public void setBooking(Booking booking) { this.booking = booking; }
+    public Customer getCustomer() {
+        return customer;
+    }
 
-    public DocumentType getDocumentType() { return documentType; }
-    public void setDocumentType(DocumentType documentType) { this.documentType = documentType; }
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
 
-    public String getFilePath() { return filePath; }
-    public void setFilePath(String filePath) { this.filePath = filePath; }
+    public Booking getBooking() {
+        return booking;
+    }
 
-    public LocalDateTime getUploadedAt() { return uploadedAt; }
-    public void setUploadedAt(LocalDateTime uploadedAt) { this.uploadedAt = uploadedAt; }
+    public void setBooking(Booking booking) {
+        this.booking = booking;
+    }
+
+    public DocumentType getDocumentType() {
+        return documentType;
+    }
+
+    public void setDocumentType(DocumentType documentType) {
+        this.documentType = documentType;
+    }
+
+    public String getFilePath() {
+        return filePath;
+    }
+
+    public void setFilePath(String filePath) {
+        this.filePath = filePath;
+    }
+
+    public LocalDateTime getUploadedAt() {
+        return uploadedAt;
+    }
+
+    public void setUploadedAt(LocalDateTime uploadedAt) {
+        this.uploadedAt = uploadedAt;
+    }
 }

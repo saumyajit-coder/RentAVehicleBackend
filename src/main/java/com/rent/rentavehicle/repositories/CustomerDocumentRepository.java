@@ -14,7 +14,7 @@ import com.rent.rentavehicle.entity.CustomerDocument;
  * 
  */
 @Repository
-public interface CustomerDocumentRepository extends CrudRepository<CustomerDocument,Long> {
-	List<CustomerDocument> findByCustomerCustomerId(String customerId);  // Get all documents for a customer
+public interface CustomerDocumentRepository extends CrudRepository<CustomerDocument, Long> {
+	List<CustomerDocument> findByCustomerCustomerId(String customerId); // Get all documents for a customer
 
 }
