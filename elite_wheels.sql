@@ -265,7 +265,7 @@ show tables;
 
 
 drop database elite_wheels;
- SELECT * FROM vehicles WHERE vehicle_id = 1;
+--  SELECT * FROM vehicles WHERE vehicle_id = 1;
 
  
  
