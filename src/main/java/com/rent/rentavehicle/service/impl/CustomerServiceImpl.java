@@ -46,11 +46,9 @@
 package com.rent.rentavehicle.service.impl;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.rent.rentavehicle.entity.Customer;
@@ -79,7 +77,7 @@ public class CustomerServiceImpl implements CustomerService {
         customer.setCustomerId(generateCustomerId());
 
         // Hash the password before saving
-        customer.setPassword(hashPassword(customer.getPasswordHash()));
+        customer.setPassword(customer.getPasswordHash());
 
         // Debugging - Print customer details before saving
         System.out.println("Saving customer: " + customer);
@@ -119,10 +117,5 @@ public class CustomerServiceImpl implements CustomerService {
 
         System.out.println("ID: " + nextId);
         return String.format("C%04d", nextId);
-    }
-
-    // Hash password using BCrypt
-    private String hashPassword(String password) {
-        return new BCryptPasswordEncoder().encode(password);
     }
 }
