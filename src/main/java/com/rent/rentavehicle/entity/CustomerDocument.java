@@ -1,7 +1,17 @@
 package com.rent.rentavehicle.entity;
 
-import jakarta.persistence.*;
 import java.time.LocalDateTime;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "customer_documents")
@@ -24,7 +34,7 @@ public class CustomerDocument {
     private DocumentType documentType;
 
     @Column(nullable = false)
-    private String filePath;
+    private String fileUrl;
 
     @Column(nullable = false)
     private LocalDateTime uploadedAt = LocalDateTime.now();
@@ -37,12 +47,12 @@ public class CustomerDocument {
     }
 
     public CustomerDocument(Long documentId, Customer customer, Booking booking, DocumentType documentType,
-            String filePath, LocalDateTime uploadedAt) {
+            String fileUrl, LocalDateTime uploadedAt) {
         this.documentId = documentId;
         this.customer = customer;
         this.booking = booking;
         this.documentType = documentType;
-        this.filePath = filePath;
+        this.fileUrl = fileUrl;
         this.uploadedAt = uploadedAt;
     }
 
@@ -79,11 +89,11 @@ public class CustomerDocument {
     }
 
     public String getFilePath() {
-        return filePath;
+        return fileUrl;
     }
 
-    public void setFilePath(String filePath) {
-        this.filePath = filePath;
+    public void setFilePath(String fileUrl) {
+        this.fileUrl = fileUrl;
     }
 
     public LocalDateTime getUploadedAt() {

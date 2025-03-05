@@ -1,7 +1,17 @@
 package com.rent.rentavehicle.entity;
 
-import jakarta.persistence.*;
 import java.time.LocalDateTime;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "vehicle_documents")
@@ -19,24 +29,24 @@ public class VehicleDocument {
     @Column(nullable = false)
     private DocumentType documentType;
 
-    @Column(nullable = false)
-    private String filePath;
+    @Column(name = "file_url", nullable = false)
+    private String fileUrl;
 
     @Column(nullable = false)
     private LocalDateTime uploadedAt = LocalDateTime.now();
 
     public enum DocumentType {
-        DRIVING_LICENSE, RC, INSURANCE_POLICY, PUC_CERTIFICATE, ID_PROOF
+        DRIVING_LICENSE, RC, INSURANCE_POLICY, PUC_CERTIFICATE, ID_PROOF, VEHICLE_IMAGE
     }
 
     public VehicleDocument() {
     }
 
-    public VehicleDocument(Long documentId, Vehicle vehicle, DocumentType documentType, String filePath, LocalDateTime uploadedAt) {
+    public VehicleDocument(Long documentId, Vehicle vehicle, DocumentType documentType, String fileUrl, LocalDateTime uploadedAt) {
         this.documentId = documentId;
         this.vehicle = vehicle;
         this.documentType = documentType;
-        this.filePath = filePath;
+        this.fileUrl = fileUrl;
         this.uploadedAt = uploadedAt;
     }
 
@@ -49,8 +59,8 @@ public class VehicleDocument {
     public DocumentType getDocumentType() { return documentType; }
     public void setDocumentType(DocumentType documentType) { this.documentType = documentType; }
 
-    public String getFilePath() { return filePath; }
-    public void setFilePath(String filePath) { this.filePath = filePath; }
+    public String getFilePath() { return fileUrl; }
+    public void setFilePath(String fileUrl) { this.fileUrl = fileUrl; }
 
     public LocalDateTime getUploadedAt() { return uploadedAt; }
     public void setUploadedAt(LocalDateTime uploadedAt) { this.uploadedAt = uploadedAt; }

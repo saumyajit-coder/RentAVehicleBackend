@@ -1,5 +1,6 @@
 package com.rent.rentavehicle.controller;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
@@ -7,11 +8,13 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.rent.rentavehicle.entity.VehicleDocument;
+import com.rent.rentavehicle.service.S3StorageService;
 import com.rent.rentavehicle.service.VehicleDocumentService;
 
 @RestController
@@ -19,9 +22,11 @@ import com.rent.rentavehicle.service.VehicleDocumentService;
 public class VehicleDocumentController {
 
     private final VehicleDocumentService vehicleDocumentService;
-
-    public VehicleDocumentController(VehicleDocumentService vehicleDocumentService) {
+    private final S3StorageService s3StorageService;
+    
+    public VehicleDocumentController(VehicleDocumentService vehicleDocumentService, S3StorageService s3StorageService) {
         this.vehicleDocumentService = vehicleDocumentService;
+        this.s3StorageService = s3StorageService;
     }
 
     // // Upload a new vehicle document
@@ -34,8 +39,18 @@ public class VehicleDocumentController {
 
     // Upload a new vehicle document
         @PostMapping("/upload")
-        public VehicleDocument uploadDocument(@RequestBody VehicleDocument document) {
-            return vehicleDocumentService.uploadDocument(document);
+        public ResponseEntity<VehicleDocument> uploadVehicleDocument(
+                @RequestParam("file") MultipartFile file,
+                @RequestParam("vehicleId") Long vehicleId,
+                @RequestParam("documentType") VehicleDocument.DocumentType documentType) {
+
+            try {
+                String fileUrl = s3StorageService.uploadFile(file); // Upload to S3
+                VehicleDocument savedDocument = vehicleDocumentService.uploadDocument(vehicleId, documentType, fileUrl);
+                return ResponseEntity.ok(savedDocument);
+            } catch (IOException e) {
+                return ResponseEntity.badRequest().body(null);
+            }
         }
 
 
