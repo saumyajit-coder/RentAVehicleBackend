@@ -1,5 +1,5 @@
-CREATE DATABASE ELITE_WHEELS;
-USE ELITE_WHEELS;
+CREATE DATABASE ELITE_WHEELS1;
+USE ELITE_WHEELS1;
 
 
 -- Admin Table
@@ -69,24 +69,10 @@ SELECT * FROM customers;
 -- Vehicles Table
 CREATE TABLE vehicles (
     vehicle_id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    owner_name VARCHAR(255) NOT NULL,
     vehicle_no VARCHAR(50) NOT NULL UNIQUE,
-    chassis_no VARCHAR(100) NOT NULL UNIQUE,
-    engine_no VARCHAR(100) NOT NULL UNIQUE,
     model_name VARCHAR(255) NOT NULL,
     kilometer_driven INT NOT NULL,
-    registration_date DATE NOT NULL,
     fuel_type ENUM('Petrol', 'Diesel', 'CNG', 'Electric', 'Hybrid') NOT NULL,
-    financier VARCHAR(255),
-    insurance_company VARCHAR(255) NOT NULL,
-    insurance_policy_no VARCHAR(100) NOT NULL,
-    insurance_valid_upto DATE NOT NULL,
-    fitness_valid_upto DATE NOT NULL,
-    puc_certificate_no VARCHAR(100) NOT NULL,
-    puc_valid_upto DATE NOT NULL,
-    registering_authority VARCHAR(255),
-    mileage INT NOT NULL,
-    vehicle_service_history TEXT,
     vehicle_type ENUM('two_wheeler', 'four_wheeler') NOT NULL,
     category ENUM('e_scooty', 'scooty', 'sports_bike', 'bike', 'sedan', 'hatchback', 'xuv', 'premium') NOT NULL,
     status ENUM('available', 'booked', 'maintenance') DEFAULT 'available',
@@ -95,42 +81,24 @@ CREATE TABLE vehicles (
 );
 
 
-INSERT INTO vehicles (
-    owner_name, vehicle_no, chassis_no, engine_no, model_name, kilometer_driven, 
-    registration_date, fuel_type, financier, insurance_company, insurance_policy_no, 
-    insurance_valid_upto, fitness_valid_upto, puc_certificate_no, puc_valid_upto, 
-    registering_authority, mileage, vehicle_service_history, vehicle_type, category, 
-    status, price_per_day
-) VALUES 
-(
-    'Rajesh Kumar', 'DL8CAF5678', 'CHS987654321', 'ENG123456789', 'Maruti Swift', 32000, 
-    '2021-08-20', 'Petrol', 'SBI Auto Loan', 'Bajaj Allianz', 'POL567890', 
-    '2024-08-20', '2025-08-20', 'PUC123456', '2024-11-30', 
-    'RTO Delhi', 18, 'Serviced every 6 months', 'four_wheeler', 'hatchback', 
-    'available', 1200.00
-), 
-(
-    'Sneha Patil', 'MH14XY6789', 'CHS456789012', 'ENG567890123', 'Hyundai Creta', 28000, 
-    '2022-10-10', 'Diesel', 'Axis Bank', 'HDFC Ergo', 'POL987654', 
-    '2025-10-10', '2026-10-10', 'PUC678901', '2024-12-20', 
-    'RTO Pune', 16, 'Periodic maintenance done', 'four_wheeler', 'xuv', 
-    'available', 1800.00
-), 
-(
-    'Arjun Mehta', 'KA03MN2345', 'CHS234567890', 'ENG345678901', 'Royal Enfield Classic 350', 15000, 
-    '2023-03-05', 'Petrol', 'HDFC Bank', 'Reliance General', 'POL234567', 
-    '2026-03-05', '2027-03-05', 'PUC345678', '2025-06-15', 
-    'RTO Bangalore', 35, 'Timely servicing at authorized center', 'two_wheeler', 'sports_bike', 
-    'available', 700.00
-), 
-(
-    'Priyanka Das', 'WB20PQ4567', 'CHS678901234', 'ENG789012345', 'Tata Nexon EV', 18000, 
-    '2022-12-12', 'Electric', 'ICICI Bank', 'Tata AIG', 'POL345678', 
-    '2025-12-12', '2026-12-12', 'PUC789012', '2024-12-31', 
-    'RTO Kolkata', 25, 'Battery checkup and software updates done', 'four_wheeler', 'premium', 
-    'available', 2000.00
-);
+INSERT INTO vehicles (vehicle_no, model_name, kilometer_driven, fuel_type, vehicle_type, category, status, price_per_day) 
+VALUES 
+('MH12AB1234', 'Honda Activa 6G', 15000, 'Petrol', 'two_wheeler', 'scooty', 'available', 300.00);
+
+INSERT INTO vehicles (vehicle_no, model_name, kilometer_driven, fuel_type, vehicle_type, category, status, price_per_day) 
+VALUES 
+('DL8CXY5678', 'Kawasaki Ninja 300', 8000, 'Petrol', 'two_wheeler', 'sports_bike', 'booked', 1200.00);
+
+INSERT INTO vehicles (vehicle_no, model_name, kilometer_driven, fuel_type, vehicle_type, category, status, price_per_day) 
+VALUES 
+('KA05MZ7890', 'Hyundai i20', 25000, 'Petrol', 'four_wheeler', 'hatchback', 'available', 1800.00);
+
+INSERT INTO vehicles (vehicle_no, model_name, kilometer_driven, fuel_type, vehicle_type, category, status, price_per_day) 
+VALUES 
+('TN09PQ4321', 'Tesla Model 3', 5000, 'Electric', 'four_wheeler', 'premium', 'maintenance', 5000.00);
+
  select * from vehicles;
+ desc vehicles;
  
 -- Bookings Table
 CREATE TABLE bookings (
@@ -253,40 +221,40 @@ CREATE TABLE customer_documents (
 
 INSERT INTO customer_documents (customer_id, booking_id, document_type, file_path, uploaded_at) 
 VALUES 
-("C0001", 1, 'DRIVING_LICENSE', '/uploads/documents/dl_1.pdf', NOW()),
-("C0002", 2, 'GOVERNMENT_ID', '/uploads/documents/gov_id_2.pdf', NOW()),
-("C0003", 3, 'PASSPORT', '/uploads/documents/passport_3.pdf', NOW()),
-("C0004", 4, 'ADDRESS_PROOF', '/uploads/documents/address_proof_4.pdf', NOW());
+('C0001', 1, 'DRIVING_LICENSE', '/uploads/documents/dl_1.pdf', NOW()),
+('C0002', 2, 'GOVERNMENT_ID', '/uploads/documents/gov_id_2.pdf', NOW()),
+('C0003', 3, 'PASSPORT', '/uploads/documents/passport_3.pdf', NOW()),
+('C0004', 4, 'ADDRESS_PROOF', '/uploads/documents/address_proof_4.pdf', NOW());
  
  SELECT * FROM customer_documents;
  
-show tables;
+-- show tables;
 
-DROP TABLE review;
-DROP TABLE payment;
+-- DROP TABLE review;
+-- DROP TABLE payment;
 
 -- Create Review Table
-CREATE TABLE review (
-    review_id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    customer_id VARCHAR(255) NOT NULL,
-    vehicle_id BIGINT NOT NULL,
-    booking_id BIGINT NOT NULL,
-    review_text TEXT,
-    rating INT NOT NULL CHECK (rating BETWEEN 1 AND 5),
-    feedback TEXT,
-    review_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
-);
+-- CREATE TABLE review (
+--     review_id BIGINT AUTO_INCREMENT PRIMARY KEY,
+--     customer_id VARCHAR(255) NOT NULL,
+--     vehicle_id BIGINT NOT NULL,
+--     booking_id BIGINT NOT NULL,
+--     review_text TEXT,
+--     rating INT NOT NULL CHECK (rating BETWEEN 1 AND 5),
+--     feedback TEXT,
+--     review_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
+-- );
 
 -- Create Payment Table
-CREATE TABLE payment (
-    payment_id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    booking_id BIGINT NOT NULL,
-    stripe_payment_id VARCHAR(255) UNIQUE,
-    payment_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    amount_paid DECIMAL(10,2) NOT NULL,
-    payment_method ENUM('CREDIT_CARD', 'DEBIT_CARD', 'NET_BANKING', 'UPI', 'CASH') NOT NULL,
-    payment_status ENUM('SUCCEEDED', 'FAILED', 'PENDING') NOT NULL
-);
+-- CREATE TABLE payment (
+--     payment_id BIGINT AUTO_INCREMENT PRIMARY KEY,
+--     booking_id BIGINT NOT NULL,
+--     stripe_payment_id VARCHAR(255) UNIQUE,
+--     payment_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+--     amount_paid DECIMAL(10,2) NOT NULL,
+--     payment_method ENUM('CREDIT_CARD', 'DEBIT_CARD', 'NET_BANKING', 'UPI', 'CASH') NOT NULL,
+--     payment_status ENUM('SUCCEEDED', 'FAILED', 'PENDING') NOT NULL
+-- );
 -- Increase size to store AWS S3 URLs  
 ALTER TABLE customer_documents MODIFY COLUMN file_path VARCHAR(500);  
 ALTER TABLE vehicle_documents MODIFY COLUMN file_path VARCHAR(500);  
@@ -302,5 +270,7 @@ ALTER TABLE vehicle_documents CHANGE COLUMN file_path file_url VARCHAR(500) NOT 
 
 -- Describe the table structure  
 DESC vehicle_documents;
-ALTER TABLE elite_wheels.vehicle_documents 
-CHANGE COLUMN document_type_old document_type_old ENUM('DRIVING_LICENSE', 'RC', 'INSURANCE_POLICY', 'PUC_CERTIFICATE', 'ID_PROOF', 'VEHICLE_IMAGE') NOT NULL ;
+
+
+
+DROP DATABASE elite_wheels1;
