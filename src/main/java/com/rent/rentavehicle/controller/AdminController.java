@@ -19,7 +19,7 @@ import com.rent.rentavehicle.service.AdminService;
 import com.rent.rentavehicle.service.VehicleDocumentService;
 
 @RestController
-@RequestMapping("/api/admin")
+@RequestMapping("/admin")
 public class AdminController {
 
     @Autowired
