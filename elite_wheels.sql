@@ -1,4 +1,3 @@
-
 CREATE DATABASE ELITE_WHEELS;
 USE ELITE_WHEELS;
 
@@ -263,14 +262,45 @@ VALUES
  
 show tables;
 
+DROP TABLE review;
+DROP TABLE payment;
 
-drop database elite_wheels;
---  SELECT * FROM vehicles WHERE vehicle_id = 1;
+-- Create Review Table
+CREATE TABLE review (
+    review_id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    customer_id VARCHAR(255) NOT NULL,
+    vehicle_id BIGINT NOT NULL,
+    booking_id BIGINT NOT NULL,
+    review_text TEXT,
+    rating INT NOT NULL CHECK (rating BETWEEN 1 AND 5),
+    feedback TEXT,
+    review_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
+);
 
- 
- 
+-- Create Payment Table
+CREATE TABLE payment (
+    payment_id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    booking_id BIGINT NOT NULL,
+    stripe_payment_id VARCHAR(255) UNIQUE,
+    payment_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    amount_paid DECIMAL(10,2) NOT NULL,
+    payment_method ENUM('CREDIT_CARD', 'DEBIT_CARD', 'NET_BANKING', 'UPI', 'CASH') NOT NULL,
+    payment_status ENUM('SUCCEEDED', 'FAILED', 'PENDING') NOT NULL
+);
+-- Increase size to store AWS S3 URLs  
+ALTER TABLE customer_documents MODIFY COLUMN file_path VARCHAR(500);  
+ALTER TABLE vehicle_documents MODIFY COLUMN file_path VARCHAR(500);  
 
+-- Rename file_path to file_url in customer_documents  
+ALTER TABLE customer_documents CHANGE COLUMN file_path file_url VARCHAR(500) NOT NULL;  
 
+-- Describe the table structure  
+DESC customer_documents;  
 
+-- Rename file_path to file_url in vehicle_documents  
+ALTER TABLE vehicle_documents CHANGE COLUMN file_path file_url VARCHAR(500) NOT NULL;  
 
-
+-- Describe the table structure  
+DESC vehicle_documents;
+ALTER TABLE elite_wheels.vehicle_documents 
+CHANGE COLUMN document_type_old document_type_old ENUM('DRIVING_LICENSE', 'RC', 'INSURANCE_POLICY', 'PUC_CERTIFICATE', 'ID_PROOF', 'VEHICLE_IMAGE') NOT NULL ;
