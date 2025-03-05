@@ -18,7 +18,7 @@ import com.rent.rentavehicle.service.S3StorageService;
 import com.rent.rentavehicle.service.VehicleDocumentService;
 
 @RestController
-@RequestMapping("/admin/vehicle-documents")
+@RequestMapping("/api/admin/vehicle-documents")
 public class VehicleDocumentController {
 
     private final VehicleDocumentService vehicleDocumentService;

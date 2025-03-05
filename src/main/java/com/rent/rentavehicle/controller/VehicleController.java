@@ -15,7 +15,7 @@ import com.rent.rentavehicle.entity.Vehicle;
 import com.rent.rentavehicle.service.VehicleService;
 
 @RestController
-@RequestMapping("/vehicles")
+@RequestMapping("/api/vehicles")
 public class VehicleController {
 
     private final VehicleService vehicleService;

@@ -19,7 +19,7 @@ import com.rent.rentavehicle.service.CustomerDocumentService;
 import com.rent.rentavehicle.service.S3StorageService;
 
 @RestController
-@RequestMapping("customers/customer-documents")
+@RequestMapping("/api/customers/customer-documents")
 public class CustomerDocumentController {
 
     private final CustomerDocumentService documentService;

@@ -17,11 +17,6 @@ public class CorsConfig {
                         .allowedHeaders("*")
                         .allowCredentials(true);
                         
-                        registry.addMapping("/auth/**")
-                        .allowedOrigins("http://localhost:3000")
-                        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
-                        .allowedHeaders("*")
-                        .allowCredentials(true);
             }
         };
     }

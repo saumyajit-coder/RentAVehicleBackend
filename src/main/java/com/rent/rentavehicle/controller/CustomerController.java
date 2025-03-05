@@ -80,7 +80,7 @@ import com.rent.rentavehicle.service.CustomerService;
 
 @RestController
 @CrossOrigin(origins = "*")  
-@RequestMapping("/customers")
+@RequestMapping("/api/customers")
 public class CustomerController {
 
     @Autowired
