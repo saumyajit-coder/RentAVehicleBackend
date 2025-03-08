@@ -78,8 +78,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.rent.rentavehicle.entity.Customer;
 import com.rent.rentavehicle.service.CustomerService;
 
+@CrossOrigin(origins = "http://localhost:3000", allowedHeaders = "*", allowCredentials = "true")
 @RestController
-@CrossOrigin(origins = "*")  
 @RequestMapping("/customers")
 public class CustomerController {
 
@@ -117,4 +117,3 @@ public class CustomerController {
         return "Customer deleted successfully.";
     }
 }
-

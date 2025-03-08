@@ -1,7 +1,10 @@
 package com.rent.rentavehicle.service;
 
-import com.rent.rentavehicle.entity.Vehicle;
 import java.util.List;
+import java.util.Optional;
+
+import com.rent.rentavehicle.entity.Vehicle;
+import com.rent.rentavehicle.entity.VehicleDocument;
 
 public interface VehicleService {
     Vehicle addVehicle(Vehicle vehicle);
@@ -9,4 +12,9 @@ public interface VehicleService {
     List<Vehicle> getAllVehicles();
     List<Vehicle> getAvailableVehicles();
     void deleteVehicle(Long vehicleId);
+
+    public List<Vehicle> getVehiclesByCategory(String category);
+    Optional<VehicleDocument> getVehicleImage(Long vehicleId);
+
+   
 }

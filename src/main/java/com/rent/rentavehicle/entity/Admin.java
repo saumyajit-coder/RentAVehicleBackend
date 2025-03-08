@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 public class Admin {
 
 	@Id
-	private String adminId;
+	public String adminId;
 
 	@Column(name = "a_name", nullable = false)
 	private String fullName;

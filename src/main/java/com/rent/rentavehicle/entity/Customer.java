@@ -14,7 +14,7 @@ public class Customer {
 
     @Id
     @Column(name = "customer_id", updatable = false, nullable = false, length = 5)
-    private String customerId;
+    public String customerId;
 
     @Column(name = "c_name", nullable = false)
     private String fullName;

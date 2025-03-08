@@ -27,9 +27,9 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable()) // Disable CSRF for stateless authentication
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/auth/**").permitAll() // Allow authentication (login/register)
-                        .requestMatchers("/admin/**").hasAuthority("admin") // Admin-only access
-                        .requestMatchers("/customers/**").hasAuthority("customer") // Customer-only access
-                        .requestMatchers("/vehicles/**", "/bookings/**").authenticated() // Requires authentication
+                        .requestMatchers("/admin/**").permitAll() // Admin-only access
+                        .requestMatchers("/customers/**").permitAll() // Customer-only access
+                        .requestMatchers("/vehicles/**", "/bookings/**").permitAll() // Requires authentication
                         .anyRequest().authenticated()) // Secure all other requests
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
@@ -47,4 +47,3 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 }
-

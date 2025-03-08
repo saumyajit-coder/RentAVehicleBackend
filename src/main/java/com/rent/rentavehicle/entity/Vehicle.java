@@ -15,7 +15,7 @@ public class Vehicle {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long vehicleId;
+    public Long vehicleId;
 
     // @Column(nullable = false)
     // private String ownerName;
@@ -77,6 +77,8 @@ public class Vehicle {
 
     @Column(nullable = false)
     private Double pricePerDay;
+
+    
 
     // Default Constructor
     public Vehicle() {}

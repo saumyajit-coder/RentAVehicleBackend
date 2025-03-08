@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.rent.rentavehicle.entity.Vehicle;
+import com.rent.rentavehicle.entity.VehicleDocument;
 import com.rent.rentavehicle.repositories.VehicleRepository;
 import com.rent.rentavehicle.service.VehicleService;
 
@@ -17,7 +18,16 @@ public class VehicleServiceImpl implements VehicleService {
     private VehicleRepository vehicleRepository;
 
     @Override
+    // public Vehicle addVehicle(Vehicle vehicle) {
+    // return vehicleRepository.save(vehicle);
+    // }
     public Vehicle addVehicle(Vehicle vehicle) {
+        // Check if vehicle with the same number already exists
+        Optional<Vehicle> existingVehicle = vehicleRepository.findByVehicleNo(vehicle.getVehicleNo());
+        if (existingVehicle.isPresent()) {
+            throw new org.springframework.dao.DataIntegrityViolationException(
+                    "Vehicle with this number already exists.");
+        }
         return vehicleRepository.save(vehicle);
     }
 
@@ -40,5 +50,16 @@ public class VehicleServiceImpl implements VehicleService {
     @Override
     public void deleteVehicle(Long vehicleId) {
         vehicleRepository.deleteById(vehicleId);
+    }
+
+    @Override
+    public List<Vehicle> getVehiclesByCategory(String category) {
+        return vehicleRepository.findByCategory(category);
+    }
+
+    @Override
+    public Optional<VehicleDocument> getVehicleImage(Long vehicleId) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getVehicleImage'");
     }
 }

@@ -2,6 +2,7 @@ package com.rent.rentavehicle.service.impl;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,15 +18,24 @@ public class VehicleDocumentServiceImpl implements VehicleDocumentService {
 
     @Autowired
     private VehicleDocumentRepository vehicleDocumentRepository;
-    private final VehicleService vehicleService;
     
+    private final VehicleService vehicleService;
+
     public VehicleDocumentServiceImpl(VehicleDocumentRepository vehicleDocumentRepository, VehicleService vehicleService) {
         this.vehicleDocumentRepository = vehicleDocumentRepository;
         this.vehicleService = vehicleService;
     }
+
     @Override
     public VehicleDocument uploadDocument(Long vehicleId, VehicleDocument.DocumentType documentType, String fileUrl) {
-        Vehicle vehicle = vehicleService.getVehicleById(vehicleId);
+        // ✅ Ensure the vehicle exists before saving the document
+        Optional<Vehicle> vehicleOpt = Optional.ofNullable(vehicleService.getVehicleById(vehicleId));
+
+        if (vehicleOpt.isEmpty()) {
+            throw new IllegalArgumentException("Vehicle with ID " + vehicleId + " not found.");
+        }
+
+        Vehicle vehicle = vehicleOpt.get();
 
         VehicleDocument document = new VehicleDocument();
         document.setVehicle(vehicle);
@@ -35,6 +45,7 @@ public class VehicleDocumentServiceImpl implements VehicleDocumentService {
 
         return vehicleDocumentRepository.save(document);
     }
+
     @Override
     public List<VehicleDocument> getDocumentsByVehicle(Long vehicleId) {
         return vehicleDocumentRepository.findByVehicleVehicleId(vehicleId);
@@ -43,5 +54,14 @@ public class VehicleDocumentServiceImpl implements VehicleDocumentService {
     @Override
     public void deleteDocument(Long documentId) {
         vehicleDocumentRepository.deleteById(documentId);
+    }
+
+    // ✅ New method to fetch only the vehicle image
+    @Override
+    public Optional<VehicleDocument> getVehicleImageByVehicleId(Long vehicleId) {
+        return vehicleDocumentRepository.findByVehicleVehicleId(vehicleId)
+                .stream()
+                .filter(doc -> doc.getDocumentType() == VehicleDocument.DocumentType.VEHICLE_IMAGE)
+                .findFirst();
     }
 }

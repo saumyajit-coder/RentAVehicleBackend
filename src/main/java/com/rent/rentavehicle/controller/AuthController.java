@@ -65,9 +65,9 @@ public class AuthController {
 
         if (dbAdmin != null && hashPasswordSHA256(admin.getPasswordHash()).equals(dbAdmin.getPasswordHash())) {
             String token = jwtUtil.generateToken(admin.getEmail(), "admin");
-            return createResponse("success", token);
+            return createResponse("success", token, dbAdmin.adminId);
         }
-        return createResponse("error", "Invalid credentials");
+        return createResponse("error", "Invalid credentials", null);
     }
 
     /**
@@ -79,18 +79,20 @@ public class AuthController {
 
         if (dbCustomer != null && hashPasswordSHA256(customer.getPasswordHash()).equals(dbCustomer.getPasswordHash())) {
             String token = jwtUtil.generateToken(customer.getEmail(), "customer");
-            return createResponse("success", token);
+
+            return createResponse("success", token, dbCustomer.customerId);
         }
-        return createResponse("error", "Invalid credentials");
+        return createResponse("error", "Invalid credentials", null);
     }
 
     /**
      * Helper method to create response messages
      */
-    private Map<String, String> createResponse(String status, String message) {
+    private Map<String, String> createResponse(String status, String message, String userId) {
         Map<String, String> response = new HashMap<>();
         response.put("status", status);
         response.put("message", message);
+        response.put("userId", userId);
         return response;
     }
 
@@ -104,7 +106,7 @@ public class AuthController {
     public Map<String, String> customerSignup(@RequestBody Customer customer) {
         // Check if email already exists
         if (customerRepository.findByEmail(customer.getEmail()) != null) {
-            return createResponse("error", "Email already in use");
+            return createResponse("error", "Email already in use",null);
         }
 
         // Generate a unique customer ID
@@ -117,7 +119,7 @@ public class AuthController {
         // Save customer to database
         customerRepository.save(customer);
 
-        return createResponse("success", "Customer registered successfully");
+        return createResponse("success", "Customer registered successfully",null);
     }
 
     /**
