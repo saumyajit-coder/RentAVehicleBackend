@@ -31,7 +31,7 @@ public class CustomerDocumentController {
     }
 
     // ✅ Upload a new document
-    @PostMapping("create")
+    @PostMapping("/create")
     public ResponseEntity<CustomerDocument> uploadDocument(
             @RequestParam("file") MultipartFile file,
             @RequestParam("customerId") String customerId,
