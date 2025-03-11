@@ -31,3 +31,21 @@ build/
 
 ### VS Code ###
 .vscode/
+
+
+### Ignore Environment and Sensitive Files ###
+.env
+application.properties
+application.yml
+
+### Ignore Logs and Temporary Files ###
+/logs/
+*.log
+*.tmp
+
+### Ignore OS-Specific Files ###
+.DS_Store
+Thumbs.db
+
+### Ignore Railway Environment File ###
+railway.env
