@@ -18,9 +18,7 @@ public class VehicleServiceImpl implements VehicleService {
     private VehicleRepository vehicleRepository;
 
     @Override
-    // public Vehicle addVehicle(Vehicle vehicle) {
-    // return vehicleRepository.save(vehicle);
-    // }
+
     public Vehicle addVehicle(Vehicle vehicle) {
         // Check if vehicle with the same number already exists
         Optional<Vehicle> existingVehicle = vehicleRepository.findByVehicleNo(vehicle.getVehicleNo());

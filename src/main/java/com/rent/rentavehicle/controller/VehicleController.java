@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fasterxml.jackson.annotation.JacksonInject;
 import com.rent.rentavehicle.entity.Vehicle;
 import com.rent.rentavehicle.service.VehicleService;
 
@@ -30,36 +29,9 @@ public class VehicleController {
         this.vehicleService = vehicleService;
     }
 
-    // // Add a new vehicle
-    // @PostMapping("/create")
-    // public ResponseEntity<Vehicle> addVehicle(@RequestBody Vehicle vehicle) {
-    // Vehicle savedVehicle = vehicleService.addVehicle(vehicle);
-    // return ResponseEntity.ok(savedVehicle);
-    // }
-
-    // Add a new vehicle
-
-    // @PostMapping("/create")
-    // public ResponseEntity<?> addVehicle(@RequestBody Vehicle vehicle) {
-    //     try {
-    //         System.out.println("Received Vehicle Data: " + vehicle); // Debugging Log
-
-    //         if (vehicle.getVehicleNo() == null || vehicle.getModelName() == null) {
-    //             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid request: Missing required fields.");
-    //         }
-
-    //         Vehicle savedVehicle = vehicleService.addVehicle(vehicle);
-    //         return ResponseEntity.ok(savedVehicle);
-    //     } catch (org.springframework.dao.DataIntegrityViolationException e) {
-    //         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-    //                 .body("Duplicate entry: Vehicle with this number already exists!");
-    //     } catch (Exception e) {
-    //         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-    //                 .body("Error adding vehicle: " + e.getMessage());
-    //     }
-    // }
 
 
+//Create New Vehicle
     @PostMapping("/create")
 public ResponseEntity<Map<String, Object>> addVehicle(@RequestBody Vehicle vehicle) {
     try {

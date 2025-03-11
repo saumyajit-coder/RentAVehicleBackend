@@ -33,32 +33,7 @@ public class VehicleDocumentController {
         this.s3StorageService = s3StorageService;
     }
 
-    // // Upload a new vehicle document
-    // @PostMapping
-    // public ResponseEntity<VehicleDocument> uploadDocument(@RequestBody
-    // VehicleDocument document) {
-    // VehicleDocument savedDocument =
-    // vehicleDocumentService.uploadDocument(document);
-    // return ResponseEntity.ok(savedDocument);
-    // }
-
-    // Upload a new vehicle document
-    // @PostMapping("/upload")
-    // public ResponseEntity<VehicleDocument> uploadVehicleDocument(
-    // @RequestParam("file") MultipartFile file,
-    // @RequestParam("vehicleId") Long vehicleId,
-    // @RequestParam("documentType") VehicleDocument.DocumentType documentType) {
-
-    // try {
-    // String fileUrl = s3StorageService.uploadFile(file); // Upload to S3
-    // VehicleDocument savedDocument =
-    // vehicleDocumentService.uploadDocument(vehicleId, documentType, fileUrl);
-    // return ResponseEntity.ok(savedDocument);
-    // } catch (IOException e) {
-    // return ResponseEntity.badRequest().body(null);
-    // }
-    // }
-
+    
     @PostMapping("/upload")
     public ResponseEntity<?> uploadVehicleDocument(
             @RequestParam("file") MultipartFile file,
