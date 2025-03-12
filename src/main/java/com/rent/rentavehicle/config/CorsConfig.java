@@ -16,7 +16,7 @@ public class CorsConfig {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
-                        .allowedOrigins("http://localhost:3000") // ✅ Allow frontend origin
+                        .allowedOrigins("https://rent-a-vehicle-frontend-lemon.vercel.app/") // ✅ Allow frontend origin
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS") // ✅ Ensure all necessary
                                                                                             // methods are allowed
                         .allowedHeaders("*") // ✅ Allow all headers
